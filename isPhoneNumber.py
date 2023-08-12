@@ -10,3 +10,11 @@ if __name__ == '__main__':
     print(mo.group(1)) # matches and returns first group enclosed in ()
     print(mo.group(2)) # matches and returns second group enclosed in () and so on...
     print(mo.groups()) # matches and returns all groups as a tuple
+
+    # matching pattern is flexible enough to match several combinations of objects
+    # to match parenthesis, escape them. for instance re.compile(r'\((\d{3}\))-\d{3}-\d{4}') matches '(xxx)-xxx-xxxx'
+    message = 'My phone number is (978)-427-8696.'
+    phoneNumberRegex = re.compile(r'\(\d{3}\)-\d{3}-\d{4}')
+    mo = phoneNumberRegex.search(message)
+
+    print(mo.group())
