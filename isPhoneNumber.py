@@ -1,4 +1,11 @@
 def isPhoneNumber(text:str)->bool:
+    '''
+    Checks if text matches the pattern of a US phone number.
+    >>> isPhoneNumber('978-427-8696')
+    >>> True
+    >>> isPhoneNumber('mochi mochi')
+    >>> False
+    '''
     if len(text) != 12: # if there aren't 12 digits
         return False
     index = 0
