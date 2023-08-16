@@ -1,40 +1,20 @@
-def isPhoneNumber(text:str)->bool:
-    '''
-    Checks if text matches the pattern of a US phone number.
-    >>> isPhoneNumber('978-427-8696')
-    >>> True
-    >>> isPhoneNumber('mochi mochi')
-    >>> False
-    '''
-    if len(text) != 12: # if there aren't 12 digits
-        return False
-    index = 0
-    while index < 3: # first 3 digits
-        if not text[index].isdecimal():
-            return False
-        index += 1
-    if text[index] != '-': # delimiter
-        return False
-    index += 1
-    while index < 7: # middle 3 digits
-        if not text[index].isdecimal():
-            return False
-        index += 1
-    if text[index] != '-': # delimiter
-        return False
-    index += 1
-    while index < 12:
-        if not text[index].isdecimal():
-            return False
-        index += 1
-    return True
+import re
 
 if __name__ == '__main__':
-    message = 'Call me at 978-427-8696 tomorrow. 978-654-0867 is my office.'
-    
-    for i in range(len(message)):
-        chunk = message[i:i+12]
-        if isPhoneNumber(chunk):
-            print('Phone number found:', chunk)
-            
-    print('Done')
+    message = 'My phone number is 978-427-8696.'
+
+    phoneNumberRegex = re.compile(r'(\d{3})-(\d{3}-\d{4})') # compile is passed a raw string indicating the type of pattern we want to match, returns Regex object
+    mo = phoneNumberRegex.search(message) # Regex object's search method is passed text to be searched and returns the first instance of the matching pattern found.
+
+    print(mo.group()) # matches and returns whole pattern
+    print(mo.group(1)) # matches and returns first group enclosed in ()
+    print(mo.group(2)) # matches and returns second group enclosed in () and so on...
+    print(mo.groups()) # matches and returns all groups as a tuple
+
+    # matching pattern is flexible enough to match several combinations of objects
+    # to match parenthesis, escape them. for instance re.compile(r'\((\d{3}\))-\d{3}-\d{4}') matches '(xxx)-xxx-xxxx'
+    message = 'My phone number is (978)-427-8696.'
+    phoneNumberRegex = re.compile(r'\(\d{3}\)-\d{3}-\d{4}')
+    mo = phoneNumberRegex.search(message)
+
+    print(mo.group())
